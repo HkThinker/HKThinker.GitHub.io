@@ -386,7 +386,160 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
         
           
-            
+            <p><img src="https://hbimg.b0.upaiyun.com/28830aa9a1ee421cc777d89859699ed93e679a46114de-OTQKoc_fw658" alt="Alt text" title="夹水筑楼溪麓间，农迁商贾出乡关，村翁忆说梨林美，雪白花星灼漫山"></p>
+<p> 创建博客的想法,我很早就有了.只是一直没有行动起来,这次恰逢碰到寒假,花了大概一个星期左右的时间,终于建好了.说实话,我对现在的界面还是有些不满意的,但是我花了很长的时间没有弄清楚问题源头在那,再看寒假已经过去四分之一了,很心疼,只能先放下,往前走了.开这一篇博文,算是对自己这几天学习的知识做个总结,也欢迎大家和我分享你们创建博客的过程中所遇到的问题.</p>
+<hr>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
+<li><strong>为什么选择Hexo和GitHub Pages?</strong></li>
+<li><strong>创建初级博客页面</strong></li>
+<li><strong>编写博客内容</strong></li>
+<li><strong>博客页面进阶设置</strong></li>
+<li><strong>博主感想</strong></li>
+</ul>
+<p>(原谅我比较变态，在博文加了歌曲，不想听歌的小胖友们可以到博文底部关闭 )</p>
+<hr>
+<h1 id="为什么选择Hexo和GitHub"><a href="#为什么选择Hexo和GitHub" class="headerlink" title="为什么选择Hexo和GitHub?"></a>为什么选择Hexo和GitHub?</h1><ul>
+<li><ul>
+<li>Hexo 是一个快速、简洁且高效的博客框架。虽然搭建的过程有些繁琐,但是搭建完成,写完成是极简单,极舒服的.</li>
+</ul>
+</li>
+<li><ul>
+<li>GitHub Pages 有 300M 免费空间，资料自己管理，保存可靠</li>
+<li>学着用 GitHub，享受 GitHub 的便利，上面有很多大牛，眼界会开阔很多</li>
+<li>顺便看看 GitHub 工作原理，最好的团队协作流程</li>
+<li>GitHub 是趋势</li>
+</ul>
+</li>
+<li><ul>
+<li>好吧(╯▽╰),我承认上面都是大神讲的,我只是对GitHub很感兴趣,全球最大的代码开源社区之一,非常想了解这个的运作流程.再加上网上对于这个组合评价较高所以就选了 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="创建初级博客页面"><a href="#创建初级博客页面" class="headerlink" title="创建初级博客页面"></a>创建初级博客页面</h1><h2 id="一-购买域名"><a href="#一-购买域名" class="headerlink" title="一:购买域名"></a>一:购买域名</h2><p>我买域名的地方是<a href="https://www.godaddy.com/" target="_blank" rel="noopener">GoDaddy</a>,当初学习的教程是推荐GoDaddyde,但是我建议大家去<a href="https://wanwang.aliyun.com/?utm_content=se_980922&amp;gclid=EAIaIQobChMI3Irjzar92AIVWQUqCh0_rQHjEAAYASAAEgJKMvD_BwE" target="_blank" rel="noopener">万网</a>买</p>
+<p>万网是阿里云旗下品牌,我想这个技术方面比外国是不会差到哪里去的,既然技术不会怎么差,干嘛不支持下国产的.</p>
+<p><img src="https://a4.qpic.cn/psb?/V11LTTAV1LstJ4/Kcl6cUR.NcHf88juu0OtLgZSI68QbBgyazfwKfvv5aM!/b/dF8BAAAAAAAA&amp;ek=1&amp;kp=1&amp;pt=0&amp;bo=BwagAAAAAAADF5M!&amp;vuin=903016812&amp;tm=1517234400&amp;sce=60-2-2&amp;rf=viewer_4" alt="Alt text"></p>
+<p>点击价格总览,可以事先查看下大概所有域名的价格.</p>
+<hr>
+<h2 id="二-在hexo生成blog"><a href="#二-在hexo生成blog" class="headerlink" title="二:在hexo生成blog"></a>二:在hexo生成blog</h2><ul>
+<li><strong>安装Node</strong><br>  到<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>官网下载相应平台的最新版本，一路安装即可。</li>
+<li><p><strong>安装Git</strong><br>  到<a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>官网下载相应平台的最新版本</p>
+</li>
+<li><p>考虑到你可能是电脑小白,所以博主也帮你们准备好了福利哟(＾Ｕ＾)ノ~ＹＯ</p>
+<ul>
+<li><a href="https://jingyan.baidu.com/article/90895e0fb3495f64ed6b0b50.html" target="_blank" rel="noopener">windows安装git</a> </li>
+<li><a href="https://jingyan.baidu.com/article/b0b63dbfca599a4a483070a5.html" target="_blank" rel="noopener">windows安装node.js</a></li>
+</ul>
+</li>
+<li><strong>安装hexo</strong></li>
+</ul>
+<p>1.创建一个文件夹(文件名:博客  (可以自己随意取啦))</p>
+<p>2.在博客文件里,空白处点击鼠标右键 选择Git Brush here</p>
+<p><img src="" alt="Alt text"></p>
+<p>3.执行下面代码,安装hexo:</p>
+<pre><code>npm install -g hexo
+</code></pre><ul>
+<li><strong>初始化框架</strong></li>
+</ul>
+<p>1.在刚才创建博客文件里,再次Git Brush here,执行如下语句:</p>
+<pre><code>hexo init blog
+cd blog
+npm install
+</code></pre><p>你可以不用理会它弹出的信息,一口气把上面三条指令打完.<br>2.检查核对blog文件夹内的信息:</p>
+<pre><code>├── _config.yml //网站的配置信息，您可以在此配置大部分的参数。 
+├── package.json 
+├── scaffolds //模版文件夹。当您新建文章时，Hexo 会根据 scaffold 来建立文件。 
+── source //资源文件夹是存放用户资源的地方。
+| ├── _drafts
+| └── _posts 
+└── themes //主题文件夹。Hexo会根据主题来生成静态页面。
+</code></pre><ul>
+<li><strong>看看自己创建的初级网站</strong></li>
+</ul>
+<p>在blog目录下执行gitbash命令:</p>
+<p>1.新建一篇文章</p>
+<pre><code>hexo new &quot;第一篇文章&quot;
+</code></pre><p>会在/source/_post里自动生成了“我的第一篇文章.md”文件，之后新建的文章都将存放在此目录下。编辑“我的第一篇文章.md”文件可修改内容。红线圈的地方修改内容.</p>
+<p><img src="" alt="Alt text"></p>
+<p>在/scaffolds/post.md 中是创建该文章的模板,设定了文章的头部属性</p>
+<p>2.生成网站(生成静态页面)</p>
+<pre><code>hexo generate(可简写 hexo g)
+</code></pre><p>3.启动服务器</p>
+<pre><code>hexo server(可简写成 hexo s)
+</code></pre><p>如果在执行时遇到了 EADDRINUSE 错误,就换成5000端口</p>
+<pre><code>hexo serve -p 5000
+</code></pre><p>4.在浏览器输入<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 既可以查看网站.</p>
+<hr>
+<h2 id="注册github"><a href="#注册github" class="headerlink" title="注册github"></a>注册github</h2><p><a href="https://github.com/" target="_blank" rel="noopener">github</a><br>注册成功后,重新登录,进入到这个界面</p>
+<p>(我建议大家用<a href="https://www.google.cn/chrome/browser/desktop/index.html" target="_blank" rel="noopener">Google浏览器</a>,第一因为对于英文不好的人来说,比如就博主我吧,看到英文很头疼,就不想看,而Google浏览器自带了一打开页面就翻译的功能,很方便.第二使用Google浏览器感觉它比其他浏览器打开全英文的网站更快点.第三这个浏览器有很多很好用的插件)</p>
+<p><img src="http://ww2.sinaimg.cn/large/005vGbJ7jw1f5md7zebr5j30wp0gnq5f.jpg" alt="Alt text"></p>
+<p><strong>接下来进入—-&gt;</strong></p>
+<p><img src="http://ww4.sinaimg.cn/large/005vGbJ7jw1f5mdn65brmj30ng0h0dh1.jpg" alt="Alt text"></p>
+<p><strong>Repository name里填写:你的用户名.github.io(必须)</strong></p>
+<p><img src="http://ww4.sinaimg.cn/large/005vGbJ7jw1f5mdofjeuij30pv0k9tab.jpg" alt="Alt text"></p>
+<p>创建成功</p>
+<p>配置SSH-Key</p>
+<p><a href="http://jingyan.baidu.com/article/a65957f4e91ccf24e77f9b11.html" target="_blank" rel="noopener">详细步骤请点击此文章</a></p>
+<hr>
+<h2 id="将blog部署到Github-Pages上"><a href="#将blog部署到Github-Pages上" class="headerlink" title="将blog部署到Github Pages上"></a>将blog部署到Github Pages上</h2><ul>
+<li><strong>提前安装一个扩展</strong></li>
+</ul>
+<p>在bolg目录下 git brush</p>
+<pre><code>npm install hexo-deployer-git --save
+</code></pre><ul>
+<li><strong>配置deploy</strong></li>
+</ul>
+<p>找到blog目录下的配置文件_config.yml,用编辑器打开此文件<br>找到此文件中的deploy字段，按照以下配置,注意配置文件的 <strong>:</strong> 号后一定要打一个空格,否则会报错</p>
+<pre><code>deploy: 
+type: git 
+repo: git@github.com:sunningcarryhaha/sunningcarryhaha.github.io.git   
+branch: master
+</code></pre><ul>
+<li><strong>在Github Pages上显示网页</strong></li>
+</ul>
+<p>在bolg目录下 git brush</p>
+<pre><code>hexo g
+</code></pre><p><strong>部署成功以后，在浏览器中输入你的repository名字,如name.github.io,就可以看到你的网站了</strong></p>
+<hr>
+<h2 id="使自己的域名和Github-Pages挂钩"><a href="#使自己的域名和Github-Pages挂钩" class="headerlink" title="使自己的域名和Github Pages挂钩"></a>使自己的域名和Github Pages挂钩</h2><h3 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h3><ul>
+<li><p>进入万网进行域名解析</p>
+</li>
+<li><p>进入public,新建CNAME</p>
+</li>
+<li><p>把域名写到CNAME里</p>
+</li>
+<li><p>传到github仓库里</p>
+</li>
+</ul>
+<p><strong>1.进入万网进行域名解析</strong></p>
+<p><img src="" alt="Alt text"></p>
+<p><img src="http://ww1.sinaimg.cn/large/005vGbJ7jw1f5fepmf432j31hb0jgthk.jpg" alt="Alt text"></p>
+<p><img src="http://ww3.sinaimg.cn/large/005vGbJ7jw1f5fer7xepxj319r0d2gpx.jpg" alt="Alt text"></p>
+<p>按照以上图片进行操作</p>
+<p><strong>尤其注意:记录值那里填写的是:sunningcarryhaha.github.io.，也就是你的仓库名字后还有个”.” </strong></p>
+<p><img src="http://ww4.sinaimg.cn/large/005vGbJ7jw1f5fe1tnb1pj30rt0h5q7d.jpg" alt="Alt text"></p>
+<p><strong>2.在CNAME里面写上你的域名</strong></p>
+<p><strong>3.在blog目录下,git brush</strong></p>
+<pre><code>hexo d
+</code></pre><p>如果上传成功的话，进入到你的github仓库中会看到CNAME文件</p>
+<p><img src="http://ww3.sinaimg.cn/large/005vGbJ7jw1f5ff5aey6gj30sj0ndn3i.jpg" alt="Alt text"></p>
+<hr>
+<h2 id="初级博客搭建完成"><a href="#初级博客搭建完成" class="headerlink" title="初级博客搭建完成"></a>初级博客搭建完成</h2><p>如果以上步骤都进行完毕的话，博主恭喜你,现在在浏览器输入你的域名，就可以成功的看到你的个人网站啦！</p>
+<hr>
+<h1 id="编写博客内容"><a href="#编写博客内容" class="headerlink" title="编写博客内容"></a>编写博客内容</h1><h1 id="博客页面进阶设置"><a href="#博客页面进阶设置" class="headerlink" title="博客页面进阶设置"></a>博客页面进阶设置</h1><h1 id="博主感想"><a href="#博主感想" class="headerlink" title="博主感想"></a>博主感想</h1><p>未完待续,博主正在努力更新……</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=32083133&auto=1&height=32"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
           
         
       
@@ -567,7 +720,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共0字</span>
+  <span class="post-count">博客全站共1.6k字</span>
 </div>
 
         
