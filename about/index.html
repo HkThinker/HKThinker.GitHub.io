@@ -11,8 +11,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
-
-
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
 
 
 
@@ -73,6 +81,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="惊艳时光与温暖岁月" type="application/atom+xml" />
 
@@ -88,7 +98,7 @@
 <meta property="og:site_name" content="惊艳时光与温暖岁月">
 <meta property="og:description" content="关于我一只迷失在岁月长河的糊涂蛋 不断得摸索技术 欢迎大家和我交流 qq:903016812Email:903016821@qq.com">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-05T03:46:57.188Z">
+<meta property="og:updated_time" content="2018-04-05T04:45:14.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="about">
 <meta name="twitter:description" content="关于我一只迷失在岁月长河的糊涂蛋 不断得摸索技术 欢迎大家和我交流 qq:903016812Email:903016821@qq.com">
@@ -230,6 +240,16 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
@@ -310,15 +330,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           
 
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzY2Mi8xMDIxNw=="></div>
-    </div>
-
-  
-
-
-
         </div>
         
           
@@ -367,7 +378,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -378,7 +389,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -479,7 +490,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.3k字</span>
+  <span class="post-count">博客全站共5.1k字</span>
 </div>
 
         
@@ -617,17 +628,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 
