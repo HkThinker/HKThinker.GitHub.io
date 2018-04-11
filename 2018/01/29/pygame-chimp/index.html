@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="惊艳时光与温暖岁月" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Pygame Monkey Fever游戏代码阅读最近有一个任务就是学习pygame模块吧!打开pygame文档之后,发现竟然有官方教程.于是自己就开始学了.下面的代码是官方教程第一个例子Monkey Fever游戏代码.自己加了注释和自己的理解,如果有理解不到位的,希望有好心人指出.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pygame_chimp">
+<meta property="og:url" content="http://yoursite.com/2018/01/29/pygame-chimp/index.html">
+<meta property="og:site_name" content="惊艳时光与温暖岁月">
+<meta property="og:description" content="Pygame Monkey Fever游戏代码阅读最近有一个任务就是学习pygame模块吧!打开pygame文档之后,发现竟然有官方教程.于是自己就开始学了.下面的代码是官方教程第一个例子Monkey Fever游戏代码.自己加了注释和自己的理解,如果有理解不到位的,希望有好心人指出.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-11T06:54:37.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pygame_chimp">
+<meta name="twitter:description" content="Pygame Monkey Fever游戏代码阅读最近有一个任务就是学习pygame模块吧!打开pygame文档之后,发现竟然有官方教程.于是自己就开始学了.下面的代码是官方教程第一个例子Monkey Fever游戏代码.自己加了注释和自己的理解,如果有理解不到位的,希望有好心人指出.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/29/pygame-chimp/"/>
+
+
+
+
+
+  <title>Pygame_chimp | 惊艳时光与温暖岁月</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
+
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+})();
+</script>
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">惊艳时光与温暖岁月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Puting thoughts and actions in to one.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/29/pygame-chimp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏伊">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://p3d5coiof.bkt.clouddn.com/psb%20%285%29.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="惊艳时光与温暖岁月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pygame_chimp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T00:15:54+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/29/pygame-chimp/" class="leancloud_visitors" data-flag-title="Pygame_chimp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1><span id="pygame-monkey-fever游戏代码阅读">Pygame Monkey Fever游戏代码阅读</span></h1><p>最近有一个任务就是学习pygame模块吧!打开<br><a href="http://www.pygame.org/docs/" target="_blank" rel="noopener">pygame文档</a>之后,发现竟然有官方教程.于是自己就开始学了.下面的代码是官方教程第一个例子Monkey Fever游戏代码.自己加了注释和自己的理解,如果有理解不到位的,希望有好心人指出.<br><a id="more"></a><br>『% codeblock [title] [lang:language] [url] [link text] %』</p>
+<p>#!/usr/bin/env python1<br>“””<br>This simple example is used for the line-by-line tutorial<br>that comes with pygame. It is based on a ‘popular’ web banner.<br>Note there are comments here, but for the full explanation,<br>follow along in the tutorial.<br>“””</p>
+<p>#Import Modules<br>import os, pygame<br>from pygame.locals import *<br>from pygame.compat import geterror</p>
+<p>#如果没有导入font,mixer模块  输出警告信息<br>if not pygame.font: print (‘Warning, fonts disabled’)<br>if not pygame.mixer: print (‘Warning, sound disabled’)</p>
+<p>main_dir = os.path.split(os.path.abspath(<strong>file</strong>))[0]</p>
+<h1><span id="将当前文件的绝对位置的目录位置返回">将当前文件的绝对位置的目录位置返回</span></h1><h1><span id="实际上该函数的分割并不智能它仅仅是以-path-中最后一个-作为分隔符">实际上，该函数的分割并不智能，它仅仅是以 “PATH” 中最后一个 ‘/‘ 作为分隔符，</span></h1><h1><span id="分隔后将索引为0的视为目录路径将索引为1的视为文件名">分隔后，将索引为0的视为目录（路径），将索引为1的视为文件名</span></h1><h1><span id="如果当前文件包含在syspath里面那么file返回一个相对路径">如果当前文件包含在sys.path里面，那么，<strong>file</strong>返回一个相对路径！</span></h1><h1><span id="如果当前文件不包含在syspath里面那么file返回一个绝对路径">如果当前文件不包含在sys.path里面，那么<strong>file</strong>返回一个绝对路径！</span></h1><p>data_dir = os.path.join(main_dir, ‘data’)</p>
+<h1><span id="进入当前文件同一目录下的data目录位置">进入当前文件同一目录下的data目录位置</span></h1><h1><span id="ospathjoin-具有合并目录的作用">os.path.join() 具有合并目录的作用</span></h1><h1><span id="ospathabspathpath-放回一个路径的绝地地址">os.path.abspath(path)¶ 放回一个路径的绝地地址</span></h1><h1><span id="functions-to-create-our-resources">functions to create our resources</span></h1><p>def load_image(name, colorkey=None):<br>    fullname = os.path.join(data_dir, name)</p>
+<pre><code># 合并成该image文件的目录,但是前提是该音乐文件必须在data目录下
+try:
+    image = pygame.image.load(fullname)
+    # 返回一个image对象
+except pygame.error:
+# 出现pygame.error类错误
+    print (&apos;Cannot load image:&apos;, fullname)
+    raise SystemExit(str(geterror()))
+    # 退出系统,并抛出该错误
+image = image.convert()
+# 更改图像的像素格式  将不同格式的图片统一操作
+if colorkey is not None:
+    if colorkey is -1:
+        colorkey = image.get_at((0,0))
+        # 获取image对象(0,0)点的色素
+    image.set_colorkey(colorkey, RLEACCEL)
+    # 设置Surface的当前颜色键。当将该表面贴
+    # 图到目标上时，任何与该颜色具有相同颜色的像素
+    # 都将是透明的。颜色可以是RGB颜色或映射的颜色整数。
+    # 如果设置失败,则默认为没有设置
+    # RLEACCEL 在非加速显示器提供更好的性能
+return image, image.get_rect()
+# 返回一个surface对象  和位置元组
+</code></pre><p>def load_sound(name):<br>    class NoneSound:</p>
+<pre><code># 创建一个空的虚拟播放器
+    def play(self): pass
+if not pygame.mixer or not pygame.mixer.get_init():
+# 如果不存在pygame.mixer 或者改模块未初始化成功
+# get_init() 成功返回True
+    return NoneSound()
+    # 采用空的虚拟播放器方法
+    # 目的:就是为了让程序,不会因为一点小差错,而不能继续执行
+fullname = os.path.join(data_dir, name)
+try:
+    sound = pygame.mixer.Sound(fullname)
+    # 该方法返回一个Sound对象
+except pygame.error:
+    print (&apos;Cannot load sound: %s&apos; % fullname)
+    raise SystemExit(str(geterror()))
+    # 抛出错误信息 并退出程序
+return sound
+</code></pre><p>#classes for our game objects<br>class Fist(pygame.sprite.Sprite):</p>
+<pre><code>#继承Sprite类  该代码的最后放了Sprite类的代码
+&quot;&quot;&quot;moves a clenched fist on the screen, following the mouse&quot;&quot;&quot;
+def __init__(self):
+    pygame.sprite.Sprite.__init__(self)
+    # call Sprite initializer
+    self.image, self.rect = load_image(&apos;fist.bmp&apos;, -1)
+    self.punching = 0
+
+def update(self):
+    &quot;move the fist based on the mouse position&quot;
+    pos = pygame.mouse.get_pos()
+    self.rect.midtop = pos
+    if self.punching:
+        self.rect.move_ip(5, 10)
+
+def punch(self, target):
+    &quot;returns true if the fist collides with the target&quot;
+    if not self.punching:
+        self.punching = 1
+        hitbox = self.rect.inflate(-5, -5)
+        return hitbox.colliderect(target.rect)
+        # 检测碰撞
+
+def unpunch(self):
+    &quot;called to pull the fist back&quot;
+    self.punching = 0
+</code></pre><p>class Chimp(pygame.sprite.Sprite):<br>    “””moves a monkey critter across the screen. it can spin the<br>       monkey when it is punched.”””<br>    def <strong>init</strong>(self):<br>        pygame.sprite.Sprite.<strong>init</strong>(self)</p>
+<pre><code>    # call Sprite intializer
+    self.image, self.rect = load_image(&apos;chimp.bmp&apos;, -1)
+    # 上面的参数是Sprite派生类必须分配的属性
+    screen = pygame.display.get_surface()
+    # 放回一个Surface对象
+    self.area = screen.get_rect()
+    self.rect.topleft = 10, 10
+    self.move = 9
+    self.dizzy = 0
+
+def update(self):
+    # Sprite派生类必须重新写的一个方法
+    &quot;walk or spin, depending on the monkeys state&quot;
+    if self.dizzy:
+        self._spin()
+    else:
+        self._walk()
+
+def _walk(self):
+    &quot;move the monkey across the screen, and turn at the ends&quot;
+    newpos = self.rect.move((self.move, 0))
+    if self.rect.left &lt; self.area.left or \
+        self.rect.right &gt; self.area.right:
+        # \ 是续行的意思
+        self.move = -self.move
+        newpos = self.rect.move((self.move, 0))
+        # move（x，y） - &gt; Rect 按照给定的偏移量移动
+        self.image = pygame.transform.flip(self.image, 1, 0)
+        # 猩猩的头换个方向
+    self.rect = newpos
+
+def _spin(self):
+    &quot;spin the monkey image&quot;
+    center = self.rect.center
+    self.dizzy = self.dizzy + 12
+    if self.dizzy &gt;= 360:
+        self.dizzy = 0
+        self.image = self.original
+        # 旋转图像可能会破坏像素吧  所以每次旋转完后还原
+    else:
+        rotate = pygame.transform.rotate
+        self.image = rotate(self.original, self.dizzy)
+    self.rect = self.image.get_rect(center=center)
+
+def punched(self):
+    &quot;this will cause the monkey to start spinning&quot;
+    if not self.dizzy:
+        self.dizzy = 1
+        self.original = self.image
+</code></pre><p>def main():<br>    “””this function is called when the program starts.<br>       it initializes everything it needs, then runs in<br>       a loop until the function returns.”””</p>
+<p>#Initialize Everything<br>    pygame.init()<br>    screen = pygame.display.set_mode((468, 60))<br>    pygame.display.set_caption(‘Monkey Fever’)<br>    pygame.mouse.set_visible(0)</p>
+<p>#Create The Backgound<br>    background = pygame.Surface(screen.get_size())<br>    background = background.convert()<br>    background.fill((250, 250, 250))</p>
+<p>#Put Text On The Background, Centered<br>    if pygame.font:</p>
+<pre><code># 看是否存在font模块
+    font = pygame.font.Font(None, 36)
+    text = font.render(&quot;Pummel The Chimp, And Win $$$&quot;, 1, (10, 10, 10))
+    # render(文本，抗锯齿，颜色，背景 = 无)- &gt; Surface
+    textpos = text.get_rect(centerx=background.get_width()/2)
+    # get_rect（text，style = STYLE_DEFAULT，rotation = 0，size = 0） - &gt; rect
+    background.blit(text, textpos)
+</code></pre><p>#Display The Background<br>    screen.blit(background, (0, 0))<br>    pygame.display.flip()</p>
+<p>#Prepare Game Objects<br>    clock = pygame.time.Clock()<br>    whiff_sound = load_sound(‘whiff.wav’)<br>    punch_sound = load_sound(‘punch.wav’)<br>    chimp = Chimp()<br>    fist = Fist()<br>    allsprites = pygame.sprite.RenderPlain((fist, chimp))</p>
+<p>#Main Loop<br>    going = True<br>    while going:<br>        clock.tick(60)</p>
+<pre><code>    # 限制游戏的运行速度
+
+    #Handle Input Events
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            going = False
+        elif event.type == KEYDOWN and event.key == K_ESCAPE:
+            going = False
+        elif event.type == MOUSEBUTTONDOWN:
+            if fist.punch(chimp):
+                punch_sound.play() #punch
+                chimp.punched()
+            else:
+                whiff_sound.play() #miss
+        elif event.type == MOUSEBUTTONUP:
+            fist.unpunch()
+
+    allsprites.update()
+
+    #Draw Everything
+    screen.blit(background, (0, 0))
+    allsprites.draw(screen)
+    pygame.display.flip()
+
+pygame.quit()
+</code></pre><p>#Game Over</p>
+<p>#this calls the ‘main’ function when this script is executed<br>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    main()</p>
+<h1><span id="class-spriteobject">class Sprite(object):</span></h1><h1><span id="简单的基类用于可见的游戏对象">简单的基类，用于可见的游戏对象。</span></h1><h1><span id="pygamespritespritegroup-返回sprit-用于可视游戏对象的基类">pygame.sprite.Sprite(*group): 返回Sprit  用于可视游戏对象的基类.</span></h1><h1><span id="派生类需要重写spriteupdate方法并分配spriteimage和spriterect属性">派生类需要重写Sprite.update()方法并分配Sprite.image和Sprite.rect属性.</span></h1><h1><span id="initself-groups可以接受任意数量的组实例-精灵将成为其中的一员"><strong>init</strong>(self, *groups)可以接受任意数量的组实例。精灵将成为其中的一员.</span></h1><h1><span id="在向组添加精灵之前在子类化sprite类时一定要调用init方法">在向组添加精灵之前,在子类化Sprite类时，一定要调用<strong>init</strong>()方法</span></h1><h1><span id="def-initself-groups">def <strong>init</strong>(self, *groups):</span></h1><h1><span id="self__g-the-groups-the-sprite-is-in">self.__g = {} # The groups the sprite is in</span></h1><pre><code># 应该是初始化一个精灵的时候,也给该精灵分配了一个组 只是组的内容为空
+</code></pre><h1><span id="if-groups">if groups:</span></h1><h1><span id="selfaddgroups">self.add(*groups)</span></h1><p>#</p>
+<h1><span id="def-addself-groups">def add(self, *groups):</span></h1><h1><span id="add-the-sprite-to-groups">“””add the sprite to groups</span></h1><p>#</p>
+<h1><span id="spriteaddgroups-return-none">Sprite.add(*groups): return None</span></h1><p>#</p>
+<h1><span id="任何数量的组实例都可以作为参数传递">任何数量的组实例都可以作为参数传递.</span></h1><h1><span id="精灵会被加入到它还不是一个成员的团体中">精灵会被加入到它还不是一个成员的团体中.</span></h1><p>#</p>
+<h1><span id="">“””</span></h1><h1><span id="has-selfgcontains__">has = self.<strong>g.</strong>contains__</span></h1><h1><span id="for-group-in-groups">for group in groups:</span></h1><h1><span id="if-hasattrgroup-_spritegroup">if hasattr(group, ‘_spritegroup’):</span></h1><h1><span id="if-not-hasgroup">if not has(group):</span></h1><h1><span id="groupadd_internalself">group.add_internal(self)</span></h1><h1><span id="selfadd_internalgroup">self.add_internal(group)</span></h1><h1><span id="else">else:</span></h1><h1><span id="selfaddgroup">self.add(*group)</span></h1><p>#<br>#</p>
+<h1><span id="def-removeself-groups">def remove(self, *groups):</span></h1><h1><span id="remove-the-sprite-from-groups">“””remove the sprite from groups</span></h1><p>#</p>
+<h1><span id="spriteremovegroups-return-none">Sprite.remove(*groups): return None</span></h1><p>#</p>
+<h1><span id="any-number-of-group-instances-can-be-passed-as-arguments-the-sprite">Any number of Group instances can be passed as arguments. The Sprite</span></h1><h1><span id="will-be-removed-from-the-groups-it-is-currently-a-member-of">will be removed from the Groups it is currently a member of.</span></h1><p>#</p>
+<h1><span id="">“””</span></h1><h1><span id="has-selfgcontains__">has = self.<strong>g.</strong>contains__</span></h1><h1><span id="contains当使用innot-in-对象的时候"># <strong>contains</strong>():当使用in，not in 对象的时候</span></h1><h1><span id="调用not-in-是在in完成后再取反实际上还是in操作"># 调用(not in 是在in完成后再取反,实际上还是in操作)</span></h1><h1><span id="for-group-in-groups">for group in groups:</span></h1><h1><span id="if-hasattrgroup-_spritegroup">if hasattr(group, ‘_spritegroup’):</span></h1><h1><span id="如果对象有该属性返回-true否则返回-false"># 如果对象有该属性返回 True，否则返回 False。</span></h1><h1><span id="if-hasgroup">if has(group):</span></h1><h1><span id="如果含有group这个值"># 如果含有group这个值</span></h1><h1><span id="groupremove_internalself">group.remove_internal(self)</span></h1><h1><span id="group这个组删除此对象"># group这个组删除此对象</span></h1><h1><span id="selfremove_internalgroup">self.remove_internal(group)</span></h1><h1><span id="此对象删除这个组"># 此对象删除这个组</span></h1><h1><span id="else">else:</span></h1><h1><span id="selfremovegroup">self.remove(*group)</span></h1><p>#</p>
+<h1><span id="def-add_internalself-group">def add_internal(self, group):</span></h1><h1><span id="self__ggroup-0">self.__g[group] = 0</span></h1><h1><span id="添加一个键值对-group0"># 添加一个键值对 {group:0}</span></h1><h1><span id="def-remove_internalself-group">def remove_internal(self, group):</span></h1><h1><span id="del-self__ggroup">del self.__g[group]</span></h1><p>#</p>
+<h1><span id="def-updateself-args">def update(self, *args):</span></h1><h1><span id="method-to-control-sprite-behavior">“””method to control sprite behavior</span></h1><p>#</p>
+<h1><span id="spriteupdateargs">Sprite.update(*args):</span></h1><p>#</p>
+<h1><span id="the-default-implementation-of-this-method-does-nothing-its-just-a">The default implementation of this method does nothing; it’s just a</span></h1><h1><span id="convenient-hook-that-you-can-override-this-method-is-called-by">convenient “hook” that you can override. This method is called by</span></h1><h1><span id="groupupdate-with-whatever-arguments-you-give-it">Group.update() with whatever arguments you give it.</span></h1><p>#</p>
+<h1><span id="there-is-no-need-to-use-this-method-if-not-using-the-convenience">There is no need to use this method if not using the convenience</span></h1><h1><span id="method-by-the-same-name-in-the-group-class">method by the same name in the Group class.</span></h1><h1><span id="就是这个方法需要你自己重新写">就是这个方法需要你自己重新写</span></h1><h1><span id="">“””</span></h1><p>#</p>
+<h1><span id="pass">pass</span></h1><p>#</p>
+<h1><span id="def-killself">def kill(self):</span></h1><h1><span id="remove-the-sprite-from-all-groups">“””remove the Sprite from all Groups</span></h1><p>#</p>
+<h1><span id="spritekill-return-none">Sprite.kill(): return None</span></h1><p>#</p>
+<h1><span id="the-sprite-is-removed-from-all-the-groups-that-contain-it-this-wont">The Sprite is removed from all the Groups that contain it. This won’t</span></h1><h1><span id="change-anything-about-the-state-of-the-sprite-it-is-possible-to">change anything about the state of the Sprite. It is possible to</span></h1><h1><span id="continue-to-use-the-sprite-after-this-method-has-been-called-including">continue to use the Sprite after this method has been called, including</span></h1><h1><span id="adding-it-to-groups">adding it to Groups.</span></h1><p>#</p>
+<h1><span id="">“””</span></h1><h1><span id="for-c-in-self__g">for c in self.__g:</span></h1><h1><span id="cremove_internalself">c.remove_internal(self)</span></h1><h1><span id="self__gclear">self.__g.clear()</span></h1><p>#</p>
+<h1><span id="def-groupsself">def groups(self):</span></h1><h1><span id="list-of-groups-that-contain-this-sprite">“””list of Groups that contain this Sprite</span></h1><p>#</p>
+<h1><span id="spritegroups-return-group_list">Sprite.groups(): return group_list</span></h1><p>#</p>
+<h1><span id="returns-a-list-of-all-the-groups-that-contain-this-sprite">Returns a list of all the Groups that contain this Sprite.</span></h1><p>#</p>
+<h1><span id="">“””</span></h1><h1><span id="return-listself__g">return list(self.__g)</span></h1><p>#</p>
+<h1><span id="def-aliveself">def alive(self):</span></h1><h1><span id="does-the-sprite-belong-to-any-groups">“””does the sprite belong to any groups</span></h1><p>#</p>
+<h1><span id="spritealive-return-bool">Sprite.alive(): return bool</span></h1><p>#</p>
+<h1><span id="returns-true-when-the-sprite-belongs-to-one-or-more-groups">Returns True when the Sprite belongs to one or more Groups.</span></h1><h1><span id="">“””</span></h1><h1><span id="return-truthself__g">return truth(self.__g)</span></h1><p>#</p>
+<h1><span id="def-reprself">def <strong>repr</strong>(self):</span></h1><h1><span id="return-lts-spritein-d-groupsgt-selfclassname-lenself__g">return “&lt;%s sprite(in %d groups)&gt;” % (self.<strong>class</strong>.<strong>name</strong>, len(self.__g))</span></h1><h1><span id="重构repr方法后不管直接输出对象还是通过print打印的信息都按我们repr方法中定义的格式进行显示了"># 重构<strong>repr</strong>方法后，不管直接输出对象还是通过print打印的信息都按我们<strong>repr</strong>方法中定义的格式进行显示了</span></h1><p>#</p>
+<p>『% endcodeblock %』</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=32083133&auto=1&height=32"></iframe>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/29/HEXO-Github创建个人独立博客/" rel="prev" title="HEXO+Github创建个人独立博客">
+                HEXO+Github创建个人独立博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzY2Mi8xMDIxNw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://p3d5coiof.bkt.clouddn.com/psb%20%285%29.jpg"
+                alt="夏伊" />
+            
+              <p class="site-author-name" itemprop="name">夏伊</p>
+              <p class="site-description motion-element" itemprop="description">我将于茫茫世界中访问我那唯一灵魂净土</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/HkThinker" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xia-yi-wei-84/activities" target="_blank" title="zhiHu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhiHu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Pygame Monkey Fever游戏代码阅读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">将当前文件的绝对位置的目录位置返回</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">实际上，该函数的分割并不智能，它仅仅是以 “PATH” 中最后一个 ‘/‘ 作为分隔符，</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">分隔后，将索引为0的视为目录（路径），将索引为1的视为文件名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">如果当前文件包含在sys.path里面，那么，file返回一个相对路径！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">如果当前文件不包含在sys.path里面，那么file返回一个绝对路径！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">7.</span> <span class="nav-text">进入当前文件同一目录下的data目录位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">8.</span> <span class="nav-text">os.path.join() 具有合并目录的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">9.</span> <span class="nav-text">os.path.abspath(path)¶ 放回一个路径的绝地地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">10.</span> <span class="nav-text">functions to create our resources</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">11.</span> <span class="nav-text">class Sprite(object):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">12.</span> <span class="nav-text">简单的基类，用于可见的游戏对象。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">13.</span> <span class="nav-text">pygame.sprite.Sprite(*group): 返回Sprit  用于可视游戏对象的基类.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">14.</span> <span class="nav-text">派生类需要重写Sprite.update()方法并分配Sprite.image和Sprite.rect属性.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">15.</span> <span class="nav-text">init(self, *groups)可以接受任意数量的组实例。精灵将成为其中的一员.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">16.</span> <span class="nav-text">在向组添加精灵之前,在子类化Sprite类时，一定要调用init()方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">17.</span> <span class="nav-text">def init(self, *groups):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">18.</span> <span class="nav-text">self.__g = {} # The groups the sprite is in</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">19.</span> <span class="nav-text">if groups:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">20.</span> <span class="nav-text">self.add(*groups)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">21.</span> <span class="nav-text">def add(self, *groups):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">22.</span> <span class="nav-text">“””add the sprite to groups</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">23.</span> <span class="nav-text">Sprite.add(*groups): return None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">24.</span> <span class="nav-text">任何数量的组实例都可以作为参数传递.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">25.</span> <span class="nav-text">精灵会被加入到它还不是一个成员的团体中.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">26.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">27.</span> <span class="nav-text">has = self.g.contains__</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">28.</span> <span class="nav-text">for group in groups:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">29.</span> <span class="nav-text">if hasattr(group, ‘_spritegroup’):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">30.</span> <span class="nav-text">if not has(group):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">31.</span> <span class="nav-text">group.add_internal(self)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">32.</span> <span class="nav-text">self.add_internal(group)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">33.</span> <span class="nav-text">else:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">34.</span> <span class="nav-text">self.add(*group)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">35.</span> <span class="nav-text">def remove(self, *groups):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">36.</span> <span class="nav-text">“””remove the sprite from groups</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">37.</span> <span class="nav-text">Sprite.remove(*groups): return None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">38.</span> <span class="nav-text">Any number of Group instances can be passed as arguments. The Sprite</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">39.</span> <span class="nav-text">will be removed from the Groups it is currently a member of.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">40.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">41.</span> <span class="nav-text">has = self.g.contains__</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">42.</span> <span class="nav-text"># contains():当使用in，not in 对象的时候</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">43.</span> <span class="nav-text"># 调用(not in 是在in完成后再取反,实际上还是in操作)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">44.</span> <span class="nav-text">for group in groups:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">45.</span> <span class="nav-text">if hasattr(group, ‘_spritegroup’):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">46.</span> <span class="nav-text"># 如果对象有该属性返回 True，否则返回 False。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">47.</span> <span class="nav-text">if has(group):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">48.</span> <span class="nav-text"># 如果含有group这个值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">49.</span> <span class="nav-text">group.remove_internal(self)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">50.</span> <span class="nav-text"># group这个组删除此对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">51.</span> <span class="nav-text">self.remove_internal(group)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">52.</span> <span class="nav-text"># 此对象删除这个组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">53.</span> <span class="nav-text">else:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">54.</span> <span class="nav-text">self.remove(*group)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">55.</span> <span class="nav-text">def add_internal(self, group):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">56.</span> <span class="nav-text">self.__g[group] = 0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">57.</span> <span class="nav-text"># 添加一个键值对 {group:0}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">58.</span> <span class="nav-text">def remove_internal(self, group):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">59.</span> <span class="nav-text">del self.__g[group]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">60.</span> <span class="nav-text">def update(self, *args):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">61.</span> <span class="nav-text">“””method to control sprite behavior</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">62.</span> <span class="nav-text">Sprite.update(*args):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">63.</span> <span class="nav-text">The default implementation of this method does nothing; it’s just a</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">64.</span> <span class="nav-text">convenient “hook” that you can override. This method is called by</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">65.</span> <span class="nav-text">Group.update() with whatever arguments you give it.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">66.</span> <span class="nav-text">There is no need to use this method if not using the convenience</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">67.</span> <span class="nav-text">method by the same name in the Group class.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">68.</span> <span class="nav-text">就是这个方法需要你自己重新写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">69.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">70.</span> <span class="nav-text">pass</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">71.</span> <span class="nav-text">def kill(self):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">72.</span> <span class="nav-text">“””remove the Sprite from all Groups</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">73.</span> <span class="nav-text">Sprite.kill(): return None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">74.</span> <span class="nav-text">The Sprite is removed from all the Groups that contain it. This won’t</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">75.</span> <span class="nav-text">change anything about the state of the Sprite. It is possible to</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">76.</span> <span class="nav-text">continue to use the Sprite after this method has been called, including</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">77.</span> <span class="nav-text">adding it to Groups.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">78.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">79.</span> <span class="nav-text">for c in self.__g:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">80.</span> <span class="nav-text">c.remove_internal(self)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">81.</span> <span class="nav-text">self.__g.clear()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">82.</span> <span class="nav-text">def groups(self):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">83.</span> <span class="nav-text">“””list of Groups that contain this Sprite</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">84.</span> <span class="nav-text">Sprite.groups(): return group_list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">85.</span> <span class="nav-text">Returns a list of all the Groups that contain this Sprite.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">86.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">87.</span> <span class="nav-text">return list(self.__g)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">88.</span> <span class="nav-text">def alive(self):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">89.</span> <span class="nav-text">“””does the sprite belong to any groups</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">90.</span> <span class="nav-text">Sprite.alive(): return bool</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">91.</span> <span class="nav-text">Returns True when the Sprite belongs to one or more Groups.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">92.</span> <span class="nav-text">“””</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">93.</span> <span class="nav-text">return truth(self.__g)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">94.</span> <span class="nav-text">def repr(self):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">95.</span> <span class="nav-text">return “&lt;%s sprite(in %d groups)&gt;” % (self.class.name, len(self.__g))</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">96.</span> <span class="nav-text"># 重构repr方法后，不管直接输出对象还是通过print打印的信息都按我们repr方法中定义的格式进行显示了</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏伊</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共7.2k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RVbr0U8Tey4FetEGw9t0TRai-gzGzoHsz", "TKIBisi9lxUBVQ2jho0u9syn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
