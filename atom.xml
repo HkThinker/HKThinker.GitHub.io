@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-11T10:27:52.656Z</updated>
+  <updated>2018-04-12T16:29:02.441Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pygame_Surfarry 有意思的像素数组</title>
+    <link href="http://yoursite.com/2018/04/12/Pygame-Surfarry-%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E5%83%8F%E7%B4%A0%E6%95%B0%E7%BB%84/"/>
+    <id>http://yoursite.com/2018/04/12/Pygame-Surfarry-有意思的像素数组/</id>
+    <published>2018-04-12T14:30:01.000Z</published>
+    <updated>2018-04-12T16:29:02.441Z</updated>
+    
+    <content type="html"><![CDATA[<h1><span id="有意思的像素数组">有意思的像素数组</span></h1><h2><span id="预言">预言</span></h2><p>按照pygame的教程走,上一篇博客我们看完了Python_chimp的小游戏代码,现在我们继续往下看,其实第一个小游戏还挺有意思的,如果你下载了Pygame模块的话,可以直接在Pygame文件夹中找到该示例程序,还有程序所需要的图片,声音.但是我觉得小游戏唯一不好的就是没有计分模块,当然这个也很简单,用front类,每击中一次,加一分,没击中扣一分,然后粘贴显示就可以了,有兴趣的可以自己额外拓展下<br><a id="more"></a></p><h2><span id="sprite-module-introduction">Sprite Module Introduction</span></h2><p>这是黑猩猩游戏的下一教学模块,里面介绍了Sprite类和Group类,碰撞检测,渲染组的基本知识,但是并没有觉得有很重要的东西,因为介绍Sprite类,Group类之类的,感觉看源码理解得更深一点,而方法则属于哪里不会查哪里的那种了,只要有想法,去查下方法就好了.所以我这里就不在多做介绍了.</p><h2><span id="surfarray-introduction">Surfarray Introduction</span></h2><p>这个教学模块是我觉得最有意思的地方了,因为这里介绍了如何应用NumPy里的数组去存储像素信息,并如何通过数组操作去改变它.这个让我很兴奋,虽然我也不知道为什么,但是确实我很高兴,可能是用了数学化的方式去改变了生活中的模拟信号,只能说学了那么多年的数学,终于感觉到它大概是怎么用的,且在感受它的时候,能感受到前辈的智慧,真得特别舒服!</p><h3><span id="数组操作">数组操作</span></h3><p>废话不多说,现在开始介绍!</p><p>在说明如何改变一张图片的像素信息的时候,我们首先要明白数组的各种操作.</p><p>直接上代码</p><pre><code>import numpy as Nstriped=N.array(N.zeros((128, 128,3)))striped.shape</code></pre><p>创建一个三维的zeros数组,而shape方法可以返回该数组维度对应的大小 如:a.shape –&gt; (128,128,3)</p><pre><code>striped[:] = (255, 0, 0)striped[:,::3] = (0, 255, 255)</code></pre><p>[第一维度,第二维度,第三维度]</p><p>[] 中只有一个”:”  表示该数组的最后一个维度,第一句话即将该数组的最后一个维度赋值(255,0,0)</p><p>start:end:step</p><p>[:,::3] 第一维度全选,第二维度选索引从0开始,步长为3的元素,第三维度没写即全选</p><p>嘴比较笨 就是 第二维度 选中的索引为 0  3  6  9  ……..</p><p>如果是 [:,3::]   第二维度选中的索引就是 从3开始,到末尾的元素  选中的索引为  3 4 5 6 7 8 9 ………</p><p>如果是 [:,3::3]  第二维度选中的索引就是 从3开始到末尾 步长为3 的元素 选中的索引为 3 6 9 12 15 ………</p><p>而如果[:,::-1]  则是第二维度的元素排列的顺序 反过来</p><p>如: 原来 : 0 1 2 3 4 5 6 7 9  —–&gt; 改变 :9 8 7 6 5 4 3 2 1 0</p><p>明白上面即可以开始看像素数组的魔法变化了!</p><h3><span id="像素数组的变化">像素数组的变化</span></h3><p>有点类似ps了,挺有意思的!这和之前pygame移动图像的原理有点类似,都是数组操作,但是移动图像属于那种加入第三方变量,临时保存需要移动图像的数据,临时保存完好,背景数组开始还原到原来的数据,然后再把第三方变量的数据贴到背景数组上合成一张移动图像后的数据数组.但是这里要介绍到的像素数组ps就有一点是一个人给自己做手术的感觉.</p><p>下面也直接上代码</p><h4><span id="反转">反转</span></h4><pre><code>flipped = rgbarray[:,::-1]#只有第二维度的顺序颠倒了,相当于就是y轴上的顺序倒了个,所以导致图像垂直反转surfdemo_show(flipped, &apos;flipped&apos;)flipped = rgbarray[::-1,:]#水平反转surfdemo_show(flipped, &apos;flipped&apos;)</code></pre><h4><span id="缩小">缩小</span></h4><pre><code>scaledown = rgbarray[::2,::2]#只取两个维度一半的信息,其实图片的信息是丢失了,所以呀放大缩小图片是失真的哈哈!surfdemo_show(scaledown, &apos;scaledown&apos;)</code></pre><p>但是Pygame的Surfarry类的对象使用放大缩小的方法的时候,会首先创建一个原来的图片的初始信息,只有当你真正完成对图片的全部操作后,才会由Python的机制自动释放掉此内存,虽说这样确实挺不错的,但是却有影藏的危机,比如如果你的图片信息特别大呢?那我们岂不是要占用很大的内存,去维持这么一个可能用不到的东西,所以Pygame又对这种情况,提供了一些其他的方法去调用,这里不介绍,大家可以自己去查看<a href="https://www.pygame.org/docs/" target="_blank" rel="noopener">Pygame官方文档</a></p><h4><span id="放大">放大</span></h4><pre><code>shape = rgbarray.shapescaleup = N.zeros((shape[0]*2, shape[1]*2, shape[2]))#先构建好一个空的框架scaleup[::2,::2,:] = rgbarray#在保持二维度一半的条件下,先填框架一维度的一半(1/4)scaleup[1::2,::2,:] = rgbarray#在保持二维度一半的条件下,再填框架一维度的一半(1/4)scaleup[:,1::2] = scaleup[:,::2]#这时再填二维度的一半(1/2)surfdemo_show(scaleup, &apos;scaleup&apos;)</code></pre><p>这段代码真是巧妙!在我明白像素数组操作的时候,我曾经构想过这个放大方法的实现办法,但是想了一会,确实没有什么好的想法.于是我是怀着无奈憧憬的心情去读的.</p><h4><span id="红色通道">红色通道</span></h4><pre><code>redimg = N.array(rgbarray)redimg[:,:,1:] = 0 #将第三维度的索引为1,2的填为0  (n,0,0)surfdemo_show(redimg, &apos;redimg&apos;)</code></pre><p>有点类似黑白报纸,不过这里应该是红黑报纸了  哈哈^_^</p><h4><span id="软化图像">软化图像</span></h4><pre><code>factor = N.array((8,), N.int32)soften = N.array(rgbarray, N.int32)soften[1:,:]  += rgbarray[:-1,:] * factorsoften[:-1,:] += rgbarray[1:,:] * factorsoften[:,1:]  += rgbarray[:,:-1] * factorsoften[:,:-1] += rgbarray[:,1:] * factorsoften //= 33surfdemo_show(soften, &apos;soften&apos;)</code></pre><p>数学真得很奇妙,虽然也带了一个数组,进去观察.但是发现得只是所有的像素点的RGB值都改变了,不是很能直观看得出软化了,甚至我都有点不相信这是同一张图片o(╥﹏╥)o,但是打印的图片确实还是原来的那张,数学真是奇妙!虽然有些像素点的RGB值错开来计算了,但是中间的像素值却是*64//32 这样还能使图像大致一样,真是有意思!</p><h4><span id="交叉淡化">交叉淡化</span></h4><pre><code>src = N.array(rgbarray)dest = N.zeros(rgbarray.shape)dest[:] = 20, 50, 100diff = (dest - src) * 0.50xfade = src + diff.astype(N.uint)surfdemo_show(xfade, &apos;xfade&apos;)</code></pre><p>完全是数学的线性计算好吧,没想到ps中的线性变化,真得是像素值做了线性的计算O(∩_∩)O哈哈~ 挺有意思的!</p><h2><span id="camera-module-introduction">Camera Module Introduction</span></h2><p>按照教程给的代码,会执行报错!准确的来说应该是Pygame的camera模块内还要引用一些我没有安装的模块,但是我上网搜了许久,并没有发现什么答案,看了源码,也不太明白到底是哪个模块.ε=(´ο｀<em>)))唉 不过上网找解决方案的时候,发现从cv2模块也是可以使用本地摄像头的,所以我也就没有太在意!所以说,就这样吧!继续往下走下去,以后用到了,再说嘿嘿(</em>^▽^*)!不过若是有好心的大侠,能告诉小虾米的话,那真是不胜感激!</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;有意思的像素数组&quot;&gt;&lt;a href=&quot;#有意思的像素数组&quot; class=&quot;headerlink&quot; title=&quot;有意思的像素数组&quot;&gt;&lt;/a&gt;有意思的像素数组&lt;/h1&gt;&lt;h2 id=&quot;预言&quot;&gt;&lt;a href=&quot;#预言&quot; class=&quot;headerlink&quot; title=&quot;预言&quot;&gt;&lt;/a&gt;预言&lt;/h2&gt;&lt;p&gt;按照pygame的教程走,上一篇博客我们看完了Python_chimp的小游戏代码,现在我们继续往下看,其实第一个小游戏还挺有意思的,如果你下载了Pygame模块的话,可以直接在Pygame文件夹中找到该示例程序,还有程序所需要的图片,声音.但是我觉得小游戏唯一不好的就是没有计分模块,当然这个也很简单,用front类,每击中一次,加一分,没击中扣一分,然后粘贴显示就可以了,有兴趣的可以自己额外拓展下&lt;br&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Pygame_chimp</title>
@@ -75,30 +95,6 @@
       
         &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;img src=&quot;http://p3d5coiof.bkt.clouddn.com/%E5%A6%96%E7%B2%BE%E7%9A%84%E5%B0%BE%E5%B7%B4.jpg&quot; alt=&quot;Alt text&quot; title=&quot;相当多
-      
-    
-    </summary>
-    
-      <category term="17寒假" scheme="http://yoursite.com/categories/17%E5%AF%92%E5%81%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>17寒假补课</title>
-    <link href="http://yoursite.com/2018/02/03/17%E5%AF%92%E5%81%87%E8%A1%A5%E8%AF%BE/"/>
-    <id>http://yoursite.com/2018/02/03/17寒假补课/</id>
-    <published>2018-02-03T14:49:37.000Z</published>
-    <updated>2018-04-05T04:28:40.635Z</updated>
-    
-    <content type="html"><![CDATA[<a id="more"></a><h1><span id="点燃星星之火">点燃星星之火</span></h1><p>17年寒假补课这个想法其实是我和严坤在17年暑假时候的共同想法,但是当时我们两个人认为团队里必须有个女生,这样子招生更加方便,遇事请解决的方法也想得更加周全.所以我们找了找住在河口的女生,首先是叶徐媛,但是她后面说她要给她弟弟补课,所以就拒绝了我们.后来我们就找到了丁蕾,丁蕾家住在河口,再加上我们见面的时候谈得非常得愉快,所以大家都约定好寒假一起弄. </p><h1><span id="元旦之行">元旦之行</span></h1><p>随着时间的流逝,距离我们约定的日子越来越近,可能因为在学校安逸的生活,让我也生出了放弃的心思,但幸好坤打电话给了我,我一想,想法是我和严坤提出的,是不应该退堂鼓,从制定方案到宣传单完全做好,我也就用了4天.但是可能因为是第一次做吧,再加上稀松的性格,导致我们做好的宣传单延期了,说实话,责任在我.元旦节,我和坤回去宣传,但是宣传单却比我们晚到一天,又因为元旦只有3天,我们第一天到家,第三天回去,宣传单第二天才到,等于我和坤发宣传单只发了一天.另外的时间我和严坤想了很多办法去宣传.比如直接上门推销,但是我们只推销了一条街,后来发现效率太低了,开店老板的儿子女儿,很少有读初中,而且就算有的话,也送到老师那里去读了.宣传单到了.之后也是发现各种问题,原先放在上面的群二维码,也因为过去了七天失去了有效性等等.总的来说元旦之行,没有什么收获.事后我们做总结的时候,也发现元旦节不应该去的,没有什么效果.其实我们放假回来宣传的那段时间是最好的.</p><h1><span id="三人之行gt二人之行">三人之行–&gt;二人之行</span></h1><p>我是第一个放假回家的,回到家,之后我休息了一天,等待丁蕾回家和她一起宣传.但是我和她也只是一起宣传了一天,但是后面因为天气下雨,我们都停滞在家里,待在家两天后,坤回来了.但是天气依旧不好,我们三个人也只是一起偶尔出去贴了贴传单.可能因为长久以来,我们只招到了一个,丁蕾又说家里有事,暑假再来,便退出了.其实这个行为让我和坤都感到心寒,我也动摇了一点,但坤说要有始有终,于是我们便两个人开始补了.英语自己虽然不好,但是初中英语确实简单,我也能全程翻译和讲解语法.O(∩_∩)O哈哈~ 并且补一个人的第二天,又有一个妹子加入了我们的补课大队.虽说没赚到什么钱,但总算成本也回来了.</p><h1><span id="清苦的14天">清苦的14天</span></h1><p>每天早上8点从家走20分钟过来给他们开门,上午两个半下午两个半,其实也挺累的,不过补课的妹子确实在数学这方面比较差,英语比较好,我们也就加重了数学的补习,也算是对他们好吧.</p><p><strong>PS:2月3号这天,其中的一个女孩请假了,于是就我一个人过去补课,说实话,好累呀,┭┮﹏┭┮,一个人在一个空荡荡的房间帮一个人补课,再加上中午没有睡,有点累</strong></p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=139774&auto=0&height=32"></iframe>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h1&gt;&lt;span id=&quot;点燃星星之火&quot;&gt;点燃星星之火&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;17年寒假补课这个想法其实是我和严坤在17年暑假时候的共同想法,但是当时我们两个人认为团队里必须有个女生,这样子招生更加方便,遇事请解决的方法也想得更加周全.
       
     
     </summary>
