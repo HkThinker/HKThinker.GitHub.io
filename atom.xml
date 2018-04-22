@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-12T16:29:02.441Z</updated>
+  <updated>2018-04-22T08:37:49.606Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python无厘头学习</title>
+    <link href="http://yoursite.com/2018/04/22/Python%E6%97%A0%E5%8E%98%E5%A4%B4%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://yoursite.com/2018/04/22/Python无厘头学习/</id>
+    <published>2018-04-22T08:36:10.000Z</published>
+    <updated>2018-04-22T08:37:49.606Z</updated>
+    
+    <content type="html"><![CDATA[<h1><span id="python学习">Python学习</span></h1><p>结束了Pygame的学习,紧接着学习的Python视屏当中有6个静音了,所以就得自己写下学习的步骤了.┭┮﹏┭┮<br><a id="more"></a></p><h2><span id="导入模块的路径设置">导入模块的路径设置</span></h2><h3><span id="热身">热身</span></h3><p><a href="https://www.cnblogs.com/wooya/p/6495222.html" target="_blank" rel="noopener">Python模块的认识</a></p><p>这是我在网上看到对python模块的基本描述,比较详细的,所以大家可以点进去看一看,当然<a href="https://docs.python.org/3/tutorial/modules.html" target="_blank" rel="noopener">官方文档</a>大家也可以看看,不过是英文,用Google浏览器,勉强翻译看看吧!其实个人感觉没有网友写得清楚,哈哈O(∩_∩)O哈哈~</p><p>这下面是我搬运第一个网友链接的,觉得这些特别好,补充了我的一些基本认识.</p><ul><li><p>import本质：</p><p>  导入模块的本质就是把Python文件解释一遍。</p><p>  导入包的本质就是执行该包下的<strong>init</strong>.py文件。</p></li><li><p>搜索模块路径:</p><pre><code>import sysfor item in sys.path:    print(item)</code></pre></li><li><p>输出当前脚本目录</p><pre><code>import osos.getcwd()  # 获取当前目录</code></pre></li><li><p>import 如何工作</p><p>  导入其实是运行时的运算，程序第一次导入指定文件时，会执行三个步骤：    </p></li></ul><p>　　        a、找到模块文件</p><p>　　        b、编译成位码（需要时）</p><p>　　        c、执行模块的代码来创建其所定义的对象</p><p>源代码文件b.py     字节码文件b.pyc</p><p>a.搜索</p><p>b、编译（可选）</p><p>遍历模块搜索路径，找到符合import语句的源代码文件后，如果有必要的话，Python接下来会将其编译成字节码。</p><p>Python会检查文件的时间戳，如果发现字节码文件比源代码文件旧（例如，如果你修改过源文件），就会在程序运行时自动重新生成字节代码。否则，就会跳过源代码到字节码的编译步骤。</p><p>c、运行</p><p>import操作的最后步骤是执行模块的字节码。文件中所有语句会依次执行，从头到尾，而此步骤中任何对变量名的赋值运算，都会产生所得到的模块文件的属性。因此，这个执行步骤会生成模块代码所定义的所有工具。例如，文件中的def语句会在导入时执行，来创建函数，并将模块内的属性赋值给那些函数。之后，函数就能被程序中这个文件的导入者来调用。</p><h3><span id="锻炼">锻炼</span></h3><p>Python导入模块的搜索路径。sys.path由如下几个部分组成：</p><p>1）程序的主目录；(当前的脚本目录)</p><p>2）PYTHONPATH环境变量配置的目录；</p><p>3）标准库目录；</p><p>4）.pth文件目录；</p><p>基于以上4点,所以我们对应的导入模块的设置的路径方式的原理就有4种.但其实实际上应用得原理只有2种,就是2),4).大家可以自己去思考原因.</p><p><a href="https://blog.csdn.net/liang19890820/article/details/76219560" target="_blank" rel="noopener">推荐大家看这篇博客</a></p><p>这篇博客介绍了基于上面原理的三种办法,两种永久的,一种暂时的.</p><h2><span id="循环导入">循环导入</span></h2><p>一、导入循环</p><p>在大型的Python工程中，由于架构设计不当，可能会出现模块间相互引用的情况。</p><h3><span id="1重新设计架构解除相互引用的关系">1.重新设计架构，解除相互引用的关系</span></h3><p>没找到例子,本人也是小白,不懂.如果有热心大侠,麻烦发个链接给我,我好加上去组成一个完善的信息节点.</p><h3><span id="2把import语句放置在模块的最后">2.把import语句放置在模块的最后</span></h3><p>没找到例子,本人也是小白,不懂.如果有热心大侠,麻烦发个链接给我,我好加上去组成一个完善的信息节点.</p><h3><span id="3把import语句放置在函数中">3.把import语句放置在函数中</span></h3><p><a href="https://blog.csdn.net/u010318270/article/details/71171228" target="_blank" rel="noopener">这是将import语句放置在函数中的讲解</a></p><p>其实里面利用到的原理就是当导入一个模块之后,也就是热身阶段的<a href="https://www.cnblogs.com/wooya/p/6495222.html" target="_blank" rel="noopener">Python模块的认识</a>第三步,执行模块的代码来创建其所定义的对象,第一次使用import语句会创建一个命名空间,control.py模块一开始需要创建一个命名空间,就需要导入submodule.py模块,而submodule.py模块一开始也需要创建一个命名空间,也需要导入control.py模块.就这样两个导入语句开始菜鸡互啄,第一次使用的import导入语句永远也没有走到尽头.把一个import导入语句放入函数中,其实就是停止了一个导入语句的菜鸡互啄,使互啄语句有了尽头.</p><h2><span id="和is">==和is</span></h2><p>Python中对象包含的三个基本要素，分别是：id(身份标识)、python type()(数据类型)和value(值)。is和==都是对对象进行比较判断作用的，但对对象比较判断的内容并不相同</p><p>== 是比较对象值是否相同</p><p>is 是比较两者是不是同一个对象,也就是比较两者的地址是不是相同.</p><h2><span id="深拷贝和浅拷贝">深拷贝和浅拷贝</span></h2><p><a href="http://python.jobbole.com/82294/" target="_blank" rel="noopener">深拷贝和浅拷贝</a>,讲得特别好,有图像,有解释,还有深拷贝和浅拷贝会应用哪些场景.</p><p>其实说白了 深拷贝就是再创建一个地址,去创建一个具有与原对象一样值的一个对象 ,而浅拷贝就是对原对象的一个引用.原对象值改变,引用对象值也改变,引用对象值改变,原对象值也改变,因为引用对象和原对象指向的地址是同一个地址.</p><p>当然还需要弄明白一点的就是可变类型和不可变类型了.</p><p>可变数据类型：列表list和字典dict,集合set；不可变数据类型：整型int、浮点型float、字符串型string和元组tuple  原子类型指得应该就是不可变数据类型.</p><p>不可变类型数据改变值可是要重新去创建一个新地址,去存储新的值的.</p><h2><span id="类的数据隐藏私有化">类的数据隐藏(私有化)</span></h2><p><a href="https://www.cnblogs.com/starsea/p/5429222.html" target="_blank" rel="noopener">简单版本的介绍</a>,介绍的比较简单,但是配上代码之后,就特别容易明白了.且介绍了特别多的名词概念</p><p><strong>foo</strong>: 定义的是特殊方法，一般是系统定义名字 ，类似 <strong>init</strong>() 之类的。</p><p>_foo: 以单下划线开头的表示的是 protected 类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *</p><p>__foo: 双下划线的表示的是私有类型(private)的变量, 只能是允许这个类本身进行访问了。</p><h2><span id="property用法">property用法</span></h2><p><a href="https://docs.python.org/release/2.6/library/functions.html#property" target="_blank" rel="noopener">官方文档</a> 对property的介绍.</p><p><a href="http://python.jobbole.com/80955/" target="_blank" rel="noopener">网友写的简易教程</a>挺不错的至少我看懂了,不过应该要把下面的补充阅读都看了,才能完整的明白.</p><p>属性装饰器,这名字感觉起得挺有意思的,将一个类内部的类函数包装成一个类的属性,挺有意思的.</p><p>property(fget=None, fset=None, fdel=None, doc=None)</p><p>最后就留一个这个属性装饰器的方法吧,不过从这个方法来看,属性装饰器只能包含三种对属性的操作,读取,修改,删除.doc是docstring,用help()方法的时候,可以看到这个docstring,其实这里面就是包含了作者对这个属性的说明,如果没有设置的话,就读取fget内的docstring.</p><h2><span id="进制和位运算">进制和位运算</span></h2><p>Python中的与或非,左移右移与c语言的操作一样.然后进制啥的,没什么好讲的.<br>不过一些位运算的设计确实很骚皮,甚至你都会用神奇两个字来形容,看完之后,只能佩服这些写出来的人.以后我会装门写一篇关于位运算操作的博客.</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Python学习&quot;&gt;&lt;a href=&quot;#Python学习&quot; class=&quot;headerlink&quot; title=&quot;Python学习&quot;&gt;&lt;/a&gt;Python学习&lt;/h1&gt;&lt;p&gt;结束了Pygame的学习,紧接着学习的Python视屏当中有6个静音了,所以就得自己写下学习的步骤了.┭┮﹏┭┮&lt;br&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Pygame_Surfarry 有意思的像素数组</title>
